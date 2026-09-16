@@ -8,7 +8,7 @@
 .idea
 .venv
 MCDGoncourt.lo1
-
+pyproject.toml
 
 # User-specific stuff
 .idea/**/workspace.xml
