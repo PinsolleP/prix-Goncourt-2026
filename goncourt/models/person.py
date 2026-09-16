@@ -3,12 +3,12 @@
 """
 Classe abstraite Person, mère de user_, author, et jury
 """
-from abc import ABC
+
 from dataclasses import dataclass
 
 
 @dataclass
-class Person(ABC):
+class Person:
     """Représente une personne du système Goncourt."""
     id_person: int
     first_name: str
