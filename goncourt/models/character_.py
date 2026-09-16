@@ -6,8 +6,9 @@ Classe character_, représentant un personnage d'un livre'.
 
 from dataclasses import dataclass
 
+
 @dataclass
-class character_:
+class Character_:
     id_character: int
     name: str
     isbn: str
