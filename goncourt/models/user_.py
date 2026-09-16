@@ -9,7 +9,7 @@ from goncourt.models.person import Person
 
 
 @dataclass
-class user_(Person):
+class User_(Person):
     id_user: int
     user_name: str
     password: str
