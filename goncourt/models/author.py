@@ -9,6 +9,6 @@ from goncourt.models.person import Person
 
 
 @dataclass
-class author(Person):
+class Author(Person):
     id_author: int
     biographie: str | None = None
