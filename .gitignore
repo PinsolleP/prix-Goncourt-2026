@@ -9,6 +9,7 @@
 .venv
 MCDGoncourt.lo1
 pyproject.toml
+uv.lock
 
 # User-specific stuff
 .idea/**/workspace.xml
