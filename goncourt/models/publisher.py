@@ -5,8 +5,9 @@ Classe publisher, représentant une maison d'édition'.
 """
 from dataclasses import dataclass
 
+
 @dataclass
-class publisher:
+class Publisher:
     id_publisher: int
     name: str
 
