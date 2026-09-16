@@ -1,0 +1,326 @@
+# 1. CREATION DES TABLES
+
+CREATE TABLE jury(
+   id_Jury INT,
+   president INT,
+   PRIMARY KEY(id_Jury)
+);
+
+CREATE TABLE publisher(
+   id_publisher INT,
+   name VARCHAR(50),
+   PRIMARY KEY(id_publisher)
+);
+
+CREATE TABLE selection(
+   id_selection INT,
+   date_selection DATE,
+   round INT,
+   PRIMARY KEY(id_selection)
+);
+
+CREATE TABLE person(
+   id_person INT,
+   first_name VARCHAR(50),
+   last_name VARCHAR(50),
+   PRIMARY KEY(id_person)
+);
+
+CREATE TABLE user_(
+   id_user INT,
+   user_name VARCHAR(50),
+   password VARCHAR(50),
+   id_person INT NOT NULL,
+   PRIMARY KEY(id_user),
+   UNIQUE(id_person),
+   FOREIGN KEY(id_person) REFERENCES Person(id_person)
+);
+
+CREATE TABLE author(
+   id_author INT,
+   biographie TEXT,
+   id_person INT,
+   PRIMARY KEY(id_author),
+   UNIQUE(id_person),
+   FOREIGN KEY(id_person) REFERENCES Person(id_person)
+);
+
+CREATE TABLE book(
+   ISBN VARCHAR(50),
+   title VARCHAR(100) NOT NULL,
+   summary TEXT,
+   publication_date DATE,
+   number_pages INT,
+   publisher_price DECIMAL(10,2),
+   id_publisher INT NOT NULL,
+   id_author INT NOT NULL,
+   PRIMARY KEY(ISBN),
+   FOREIGN KEY(id_publisher) REFERENCES Publisher(id_publisher),
+   FOREIGN KEY(id_author) REFERENCES Author(id_author)
+);
+
+CREATE TABLE character_(
+   id_character INT,
+   name VARCHAR(50) NOT NULL,
+   ISBN VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_character),
+   FOREIGN KEY(ISBN) REFERENCES Book(ISBN)
+);
+
+CREATE TABLE is_selected(
+   ISBN VARCHAR(50),
+   id_selection INT,
+   PRIMARY KEY(ISBN, id_selection),
+   FOREIGN KEY(ISBN) REFERENCES Book(ISBN),
+   FOREIGN KEY(id_selection) REFERENCES Selection(id_selection)
+);
+
+CREATE TABLE is_member(
+   id_Jury INT,
+   id_person INT,
+   PRIMARY KEY(id_Jury, id_person),
+   FOREIGN KEY(id_Jury) REFERENCES Jury(id_Jury),
+   FOREIGN KEY(id_person) REFERENCES Person(id_person)
+);
+
+CREATE TABLE vote(
+   ISBN VARCHAR(50),
+   id_Jury INT,
+   id_selection INT,
+   number_of_votes INT,
+   PRIMARY KEY(ISBN, id_Jury, id_selection),
+   FOREIGN KEY(ISBN) REFERENCES Book(ISBN),
+   FOREIGN KEY(id_Jury) REFERENCES Jury(id_Jury),
+   FOREIGN KEY(id_selection) REFERENCES Selection(id_selection)
+);
+
+# 2. CLES ETRANGERES AJOUTEES APRES CREATION
+
+ALTER TABLE jury
+ADD FOREIGN KEY (president) REFERENCES person(id_person);
+
+# 3. INSERTION DES DONNEES
+
+INSERT INTO publisher (id_publisher, name)
+VALUES
+(1, 'Albin Michel'),
+(2, 'POL'),
+(3, 'Grasset'),
+(4, 'Robert Laffont'),
+(5, 'Actes Sud'),
+(6, 'L''Iconoclaste'),
+(7, 'Gallimard'),
+(8, 'Flammarion'),
+(9, 'Verdier'),
+(10, 'L''Arbalete/Gallimard'),
+(11, 'Minuit'),
+(12, 'Maurice Nadeau');
+
+INSERT INTO person (id_person, first_name, last_name)
+VALUES
+(1, 'Didier', 'Decoin'),
+(2, 'Francoise', 'Chandernagor'),
+(3, 'Tahar', 'Ben Jelloun'),
+(4, 'Paule', 'Constant'),
+(5, 'Philippe', 'Claudel'),
+(6, 'Pierre', 'Assouline'),
+(7, 'Eric-Emmanuel', 'Schmitt'),
+(8, 'Camille', 'Laurens'),
+(9, 'Pascal', 'Bruckner'),
+(10, 'Christine', 'Angot'),
+(11, 'Boris', 'Bergmann'),
+(12, 'Louise', 'Chennevière'),
+(13, 'Ananda', 'Devi'),
+(14, 'Sonia', 'Devillers'),
+(15, 'Anne', 'Godard'),
+(16, 'Olivier', 'Grondeau'),
+(17, 'Yannick', 'Haenel'),
+(18, 'Lilia', 'Hassaine');
+
+INSERT INTO jury (id_Jury, president)
+VALUES
+(1, 5);
+
+INSERT INTO is_member (id_Jury, id_person)
+VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(1, 8),
+(1, 9),
+(1, 10);
+
+INSERT INTO author (id_author, biographie, id_person)
+VALUES
+(1, NULL, 11),
+(2, NULL, 12),
+(3, NULL, 13),
+(4, NULL, 14),
+(5, NULL, 15),
+(6, NULL, 16),
+(7, NULL, 17),
+(8, NULL, 18);
+
+INSERT INTO book (
+    ISBN,
+    title,
+    summary,
+    publication_date,
+    number_pages,
+    publisher_price,
+    id_publisher,
+    id_author
+)
+VALUES (
+    '9782226511874',
+    'Minotaure',
+    'Un roman autobiographique qui revisite la figure du Minotaure et explore la relation au père, au désir et à la monstruosité.',
+    '2026-08-19',
+    242,
+    20.90,
+    1,
+    1
+),
+(
+    '9782818063583',
+    'Faire la peau',
+    'Le récit d’une enfance sous l’emprise maternelle et du désir de s’émanciper d’une relation mère-fille marquée par la violence.',
+    '2026-08-20',
+    286,
+    21.00,
+    2,
+    2
+),
+(
+    '9782246846949',
+    'Chronique d''un royaume perdu',
+    'Dans un village isolé de l''île Maurice, quatre générations d''une famille se succèdent depuis le temps de l''esclavage, entre violence, amour, fantastique et mémoire.',
+    '2026-08-19',
+    454,
+    24.00,
+    3,
+    3
+),
+(
+    '9782221286807',
+    'Le fabuleux piano',
+    'Sonia Devillers mène une enquête autour d''un piano ayant appartenu à une famille juive spoliée pendant l''Occupation et explore la mémoire liée à cette histoire.',
+    '2026-08-27',
+    280,
+    21.00,
+    4,
+    4
+),
+(
+    '9782330225575',
+    'Nous aussi',
+    'Une famille parisienne vit dans un univers fermé et fusionnel jusqu''à ce qu''un événement vienne fissurer l''équilibre familial.',
+    '2026-08-19',
+    237,
+    20.00,
+    5,
+    5
+),
+(
+    '9782378805975',
+    'Joseph dans la nuit',
+    'Un récit inspiré de l''expérience de captivité d''Olivier Grondeau et de son parcours marqué par la violence, la résistance et la volonté de retrouver sa liberté.',
+    '2026-08-20',
+    230,
+    19.90,
+    6,
+    6
+),
+(
+    '9782073161925',
+    'La solitude des professeurs est infinie',
+    'Jean Deichel, jeune professeur de français, découvre la réalité de l''enseignement tout en cherchant une forme de poésie et de liberté dans son quotidien.',
+    '2026-08-20',
+    313,
+    21.50,
+    7,
+    7S
+),
+(
+    '9782073099945',
+    'Je',
+    'En 1831, en Jamaïque, Antoinette Cosway raconte son histoire et cherche à reprendre possession de son destin, dans une relecture de Jane Eyre.',
+    '2026-08-20',
+    248,
+    21.00,
+    7,
+    8
+),
+(
+    '9782080490896',
+    'L''inconnue du quai de Javel',
+    8,
+    9
+),
+(
+    '9782226499523',
+    'Une forêt',
+    1,
+    10
+),
+(
+    '9782378562953',
+    'N''efface pas mes cercles',
+    9,
+    11
+),
+(
+    '9782073162854',
+    'Choses que je croyais perdues',
+    10,
+    12
+),
+(
+    '9782246847069',
+    'C''était ça ou mourir',
+    3,
+    13
+),
+(
+    '9782707358233',
+    'De l''autre côté du lac',
+    11,
+    14
+),
+(
+    '9782073121349',
+    'La guerre éternelle',
+    7,
+    15
+),
+(
+    '9782862316857',
+    'Bataille au procès',
+    12,
+    16
+);
+
+INSERT INTO character_ (id_character, name, ISBN)
+VALUES
+(1, 'Minotaure', '9782226511874'),
+(2, 'Madame', '9782246846949'),
+(3, 'Le Vieux Bouc', '9782246846949'),
+(4, 'L''enfant chroniqueur', '9782246846949'),
+(5, 'Son cousin', '9782246846949'),
+(6, 'Sonia Devillers', '9782221286807'),
+(7, 'La grand-mère de Sonia Devillers', '9782221286807'),
+(8, 'Les Enoch', '9782221286807'),
+(9, 'Olivier', '9782378805975'),
+(10, 'Jean Deichel', '9782073161925'),
+(11, 'Antoinette Cosway', '9782073099945'),
+(12, 'Edward Rochester', '9782073099945');
+
+INSERT INTO selection (id_selection, date_selection, round)
+VALUES
+(1, '2026-09-02', 1),
+(2, '2026-10-06', 2),
+(3, '2026-10-27', 3);
