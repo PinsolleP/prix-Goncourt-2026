@@ -18,7 +18,7 @@ class CharacterDao(Dao[Character_]):
         """Crée un Personnage en base de données.
         """
 
-        sql = "INSERT INTO character_(id_character, name, ISBN) VALUES (%s, %s, %s)"
+        sql = "INSERT INTO character_(id_character, name, isbn) VALUES (%s, %s, %s)"
 
         with Dao.connection.cursor() as cursor:
             cursor.execute(sql, (character.id_character, character.name, character.isbn))
@@ -39,7 +39,7 @@ class CharacterDao(Dao[Character_]):
             return Character_(
                 id_character=row["id_character"],
                 name=row["name"],
-                ISBN=row["ISBN"]
+                isbn=row["isbn"]
             )
 
     def update(self, character: Character_) -> bool:
