@@ -14,7 +14,7 @@ from goncourt.models.publisher import Publisher
 
 @dataclass
 class Book:
-    isbn: str
+    isbn: int
     title: str
     summary: str | None
     publication_date: date | None
