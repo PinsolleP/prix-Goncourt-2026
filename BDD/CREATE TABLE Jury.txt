@@ -46,7 +46,7 @@ CREATE TABLE author(
 );
 
 CREATE TABLE book(
-   ISBN VARCHAR(50),
+   isbn BIGINT,
    title VARCHAR(100) NOT NULL,
    summary TEXT,
    publication_date DATE,
@@ -54,7 +54,7 @@ CREATE TABLE book(
    publisher_price DECIMAL(10,2),
    id_publisher INT NOT NULL,
    id_author INT NOT NULL,
-   PRIMARY KEY(ISBN),
+   PRIMARY KEY(isbn),
    FOREIGN KEY(id_publisher) REFERENCES Publisher(id_publisher),
    FOREIGN KEY(id_author) REFERENCES Author(id_author)
 );
@@ -62,16 +62,16 @@ CREATE TABLE book(
 CREATE TABLE character_(
    id_character INT,
    name VARCHAR(50) NOT NULL,
-   ISBN VARCHAR(50) NOT NULL,
+   isbn BIGINT NOT NULL,
    PRIMARY KEY(id_character),
-   FOREIGN KEY(ISBN) REFERENCES Book(ISBN)
+   FOREIGN KEY(isbn) REFERENCES Book(isbn)
 );
 
 CREATE TABLE is_selected(
-   ISBN VARCHAR(50),
+   isbn BIGINT,
    id_selection INT,
-   PRIMARY KEY(ISBN, id_selection),
-   FOREIGN KEY(ISBN) REFERENCES Book(ISBN),
+   PRIMARY KEY(isbn, id_selection),
+   FOREIGN KEY(isbn) REFERENCES Book(isbn),
    FOREIGN KEY(id_selection) REFERENCES Selection(id_selection)
 );
 
@@ -84,12 +84,12 @@ CREATE TABLE is_member(
 );
 
 CREATE TABLE vote(
-   ISBN VARCHAR(50),
+   isbn BIGINT,
    id_Jury INT,
    id_selection INT,
    number_of_votes INT,
-   PRIMARY KEY(ISBN, id_Jury, id_selection),
-   FOREIGN KEY(ISBN) REFERENCES Book(ISBN),
+   PRIMARY KEY(isbn, id_Jury, id_selection),
+   FOREIGN KEY(isbn) REFERENCES Book(isbn),
    FOREIGN KEY(id_Jury) REFERENCES Jury(id_Jury),
    FOREIGN KEY(id_selection) REFERENCES Selection(id_selection)
 );
@@ -135,7 +135,15 @@ VALUES
 (15, 'Anne', 'Godard'),
 (16, 'Olivier', 'Grondeau'),
 (17, 'Yannick', 'Haenel'),
-(18, 'Lilia', 'Hassaine');
+(18, 'Lilia', 'Hassaine'),
+(19, 'Philippe', 'Jaenada'),
+(20, 'Jean-Yves', 'Jouannais'),
+(21, 'Emma', 'Marsantes'),
+(22, 'Clémentine', 'Mélois'),
+(23, 'Thélyson', 'Orélien'),
+(24, 'Sylvain', 'Prudhomme'),
+(25, 'Olivier', 'Rolin'),
+(26, 'Patrice', 'Trigano');
 
 INSERT INTO jury (id_Jury, president)
 VALUES
@@ -163,10 +171,18 @@ VALUES
 (5, NULL, 15),
 (6, NULL, 16),
 (7, NULL, 17),
-(8, NULL, 18);
+(8, NULL, 18),
+(9, NULL, 19),
+(10, NULL, 20),
+(11, NULL, 21),
+(12, NULL, 22),
+(13, NULL, 23),
+(14, NULL, 24),
+(15, NULL, 25),
+(16, NULL, 26);
 
 INSERT INTO book (
-    ISBN,
+    isbn,
     title,
     summary,
     publication_date,
@@ -243,7 +259,7 @@ VALUES (
     313,
     21.50,
     7,
-    7S
+    7
 ),
 (
     '9782073099945',
@@ -258,53 +274,85 @@ VALUES (
 (
     '9782080490896',
     'L''inconnue du quai de Javel',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     8,
     9
 ),
 (
     '9782226499523',
     'Une forêt',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     1,
     10
 ),
 (
     '9782378562953',
     'N''efface pas mes cercles',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     9,
     11
 ),
 (
     '9782073162854',
     'Choses que je croyais perdues',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     10,
     12
 ),
 (
     '9782246847069',
     'C''était ça ou mourir',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     3,
     13
 ),
 (
     '9782707358233',
     'De l''autre côté du lac',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     11,
     14
 ),
 (
     '9782073121349',
     'La guerre éternelle',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     7,
     15
 ),
 (
     '9782862316857',
     'Bataille au procès',
+    NULL,
+    NULL,
+    NULL,
+    NULL,
     12,
     16
 );
 
-INSERT INTO character_ (id_character, name, ISBN)
+INSERT INTO character_ (id_character, name, isbn)
 VALUES
 (1, 'Minotaure', '9782226511874'),
 (2, 'Madame', '9782246846949'),
