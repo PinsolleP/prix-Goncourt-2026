@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Classe PersonDao, permettant la gestion des Person en base de données.
+Classe SelectionDao, permettant la gestion des sélections en base de données.
 """
 
 from dataclasses import dataclass
@@ -12,7 +12,7 @@ from goncourt.models.selection import Selection
 
 
 @dataclass
-class PersonDao(Dao[Selection]):
+class SelectionDao(Dao[Selection]):
     """DAO permettant de gérer les sélections en base de données."""
 
     def create(self, selection: Selection) -> int:
