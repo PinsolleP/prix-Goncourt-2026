@@ -239,6 +239,71 @@ def test_character_dao():
     person_dao.delete(person)
     publisher_dao.delete(publisher)
 
+# TEST Book
+def test_book_dao():
+    print()
+    person_dao = PersonDao()
+    author_dao = AuthorDao()
+    publisher_dao = PublisherDao()
+    book_dao = BookDao()
+
+    person = Person(
+        id_person=53,
+        first_name="Auteur",
+        last_name="Book Test",
+    )
+    person_dao.create(person)
+
+    author = Author(
+        id_person=53,
+        first_name="Auteur",
+        last_name="Book Test",
+        id_author=52,
+        biographie="Biographie Book Test"
+    )
+    author_dao.create(author)
+
+    publisher = Publisher(
+        id_publisher=52,
+        name="Publisher Book Test",
+    )
+    publisher_dao.create(publisher)
+
+    book = Book(
+        isbn=9780000000052,
+        title="Book Test",
+        summary="Resumé du livre test",
+        publication_date=date(2026, 9, 18),
+        number_pages=200,
+        publisher_price=Decimal("20.00"),
+        publisher=publisher,
+        author=author
+    )
+
+    # CREATE
+    result = book_dao.create(book)
+    print("CREATE Book :", result)
+
+    # READ
+    book_read = book_dao.read(9780000000052)
+    print("READ Book :", book_read)
+
+    #UPDATE
+    book.title = "Book Test Updated"
+    result = book_dao.update(book)
+    print("UPDATE Book :", result)
+
+    book_read = book_dao.read(9780000000052)
+    print("READ après UPDATE Book :", book_read)
+
+    # DELETE
+    result = book_dao.delete(book)
+    print("DELETE Book :", result)
+
+    author_dao.delete(author)
+    person_dao.delete(person)
+    publisher_dao.delete(publisher)
+
 
 if __name__ == "__main__":
     test_person_dao()
@@ -246,3 +311,4 @@ if __name__ == "__main__":
     test_author_dao()
     test_selection_dao()
     test_character_dao()
+    test_book_dao()
