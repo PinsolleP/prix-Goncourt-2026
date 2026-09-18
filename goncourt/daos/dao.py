@@ -16,7 +16,7 @@ class Dao[T](ABC):
     connection: ClassVar[pymysql.Connection] = \
         pymysql.connect(host="localhost",
                         user='root',
-                        database='goncourt',
+                        database='prix_goncourt',
                         cursorclass=pymysql.cursors.DictCursor)
 
     @abstractmethod
