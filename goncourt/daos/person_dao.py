@@ -47,7 +47,7 @@ class PersonDao(Dao[Person]):
         """Met à jour une personne en base de données
         """
         with Dao.connection.cursor() as cursor:
-            sql = "UPDATE personne SET first_name = %s, last_name = %s WHERE id_person = %s"
+            sql = "UPDATE person SET first_name = %s, last_name = %s WHERE id_person = %s"
             cursor.execute(sql, (person.first_name, person.last_name, person.id_person))
             updated = cursor.rowcount > 0
         Dao.connection.commit()
