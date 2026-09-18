@@ -22,7 +22,7 @@ class JuryDao(Dao[Jury]):
         sql = "INSERT INTO jury(id_jury, president) VALUES (%s, %s)"
 
         with Dao.connection.cursor() as cursor:
-            cursor.execute(sql, (jury.id_jury, jury.president))
+            cursor.execute(sql, (jury.id_jury, jury.president.id_person))
 
         Dao.connection.commit()
         return jury.id_jury
