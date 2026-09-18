@@ -21,7 +21,7 @@ class UserDao(Dao[User_]):
         sql = "INSERT INTO user_(user_name, password, id_person) VALUES (%s, %s, %s)"
 
         with Dao.connection.cursor() as cursor:
-            cursor.execute(sql, (user.first_name, user.last_name, user.id_person))
+            cursor.execute(sql, (user.user_name, user.password, user.id_person))
             id_user = cursor.lastrowid
 
         Dao.connection.commit()
