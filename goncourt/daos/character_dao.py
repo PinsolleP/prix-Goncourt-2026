@@ -47,7 +47,7 @@ class CharacterDao(Dao[Character_]):
         """
         with Dao.connection.cursor() as cursor:
             sql = "UPDATE character_ SET name = %s WHERE id_character = %s"
-            cursor.execute(sql, (character.name, character.id_publisher))
+            cursor.execute(sql, (character.name, character.id_character))
             updated = cursor.rowcount > 0
         Dao.connection.commit()
         return updated
